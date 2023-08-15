@@ -60,132 +60,65 @@ function playRound(playerSelection, computerSelection)
 }
 
 /*
-plays 5 rounds of rock paper scissiors. will later be replaced with for loop to determine out of how many games.
-1. needs to work on the condition where the user input is invalid.
-2. needs to work on a special exiting condition where the computer or winner first reaches 3 wins before all the rounds.
+keeps track of points until a winner is decided by whoever reaches 5 points first.
+it then declares the winner and resets the points and round #. 
 */
 function game()
 {
     let player = 0;
     let computer = 0;
+    let round = 1;
 
-    let computerSelection = getComputerChoice();
-    let playerSelection = prompt("rock, paper, or scissors?");
-    console.log("Computer Selection: " + computerSelection);
-    let round = playRound(playerSelection, computerSelection);
-    switch (round[0])
-    {
-        case 0:
-            player += 1;
-            console.log("Round 1 : " + round[1]);
-            break;
-        case 1:
-            computer += 1;
-            console.log("Round 1 : " + round[1]);
-            break;
-        case 2:
-            console.log("Round 1 : " + round[1]);
-            break;
-        case 3:
-            console.log("Round 1 : " + round[1]);
-            break;
-    }
-    computerSelection = getComputerChoice();
-    playerSelection = prompt("rock, paper, or scissors?");
-    console.log("Computer Selection: " + computerSelection);
-    round = playRound(playerSelection, computerSelection);
-    switch (round[0])
-    {
-        case 0:
-            player += 1;
-            console.log("Round 2 : " + round[1]);
-            break;
-        case 1:
-            computer += 1;
-            console.log("Round 2 : " + round[1]);
-            break;
-        case 2:
-            console.log("Round 2 : " + round[1]);
-            break;
-        case 3:
-            console.log("Round 2 : " + round[1]);
-            break;
-    }
-    computerSelection = getComputerChoice();
-    playerSelection = prompt("rock, paper, or scissors?");
-    console.log("Computer Selection: " + computerSelection);
-    round = playRound(playerSelection, computerSelection);
-    switch (round[0])
-    {
-        case 0:
-            player += 1;
-            console.log("Round 3 : " + round[1]);
-            break;
-        case 1:
-            computer += 1;
-            console.log("Round 3 : " + round[1]);
-            break;
-        case 2:
-            console.log("Round 3 : " + round[1]);
-            break;
-        case 3:
-            console.log("Round 3 : " + round[1]);
-            break;
-    }
-    computerSelection = getComputerChoice();
-    playerSelection = prompt("rock, paper, or scissors?");
-    console.log("Computer Selection: " + computerSelection);
-    round = playRound(playerSelection, computerSelection);
-    switch (round[0])
-    {
-        case 0:
-            player += 1;
-            console.log("Round 4 : " + round[1]);
-            break;
-        case 1:
-            computer += 1;
-            console.log("Round 4 : " + round[1]);
-            break;
-        case 2:
-            console.log("Round 4 : " + round[1]);
-            break;
-        case 3:
-            console.log("Round 1 : " + round[1]);
-            break;
-    }
-    computerSelection = getComputerChoice();
-    playerSelection = prompt("rock, paper, or scissors?");
-    console.log("Computer Selection: " + computerSelection);
-    round = playRound(playerSelection, computerSelection);
-    switch (round[0])
-    {
-        case 0:
-            player += 1;
-            console.log("Round 5 : " + round[1]);
-            break;
-        case 1:
-            computer += 1;
-            console.log("Round 5 : " + round[1]);
-            break;
-        case 2:
-            console.log("Round 5 : " + round[1]);
-            break;
-        case 3:
-            console.log("Round 1 : " + round[1]);
-            break;
-    }
-    if (player > computer)
-    {
-        console.log("You Won!");
-    } 
-    else if (player < computer)
-    {
-        console.log("You Lost!");
-    }
-    else
-    {
-        console.log("Draw");
-    }
+    const buttons = document.querySelectorAll('button');
+    buttons.forEach((button) => {
+        button.addEventListener('click',() => {
+            let computerSelection = getComputerChoice();
+            let result = playRound(button.id,computerSelection);
+            const output = document.querySelector('#output');
+            output.textContent = `Computer Selection: ${computerSelection}\r\n`;
+            switch (result[0])
+            {
+            case 0:
+                player += 1;
+                output.textContent += `Round ${round++} : ${result[1]}\r\n`;
+                output.textContent += `you : ${player} vs computer : ${computer}`;
+                break;
+            case 1:
+                computer += 1;
+                output.textContent += `Round ${round++} : ${result[1]}\r\n`;
+                output.textContent += `you : ${player} vs computer : ${computer}`;
+                break;
+            case 2:
+                output.textContent += `Round ${round++} : ${result[1]}\r\n`;
+                output.textContent += `you : ${player} vs computer : ${computer}`;
+                break;
+            case 3:
+                output.textContent += `Round ${round++} : ${result[1]}\r\n`;
+                output.textContent += `you : ${player} vs computer : ${computer}`;
+                break;
+            }
+
+            if (player == 5)
+            {
+                output.textContent = 'You won!\r\n';
+                output.textContent += `you : ${player} vs computer : ${computer}`;
+                player = 0;
+                computer = 0;
+                round = 1;
+            }
+            
+            if (computer == 5)
+            {
+                output.textContent = 'You Lost!\r\n';
+                output.textContent += `you : ${player} vs computer : ${computer}`;
+                player = 0;
+                computer = 0;
+                round = 0;
+            }
+
+        })
+    });
+
 }
 
 game();
